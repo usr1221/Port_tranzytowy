@@ -43,8 +43,8 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    public Employee registerEmployee(Employee employee) {
-        employee.setPasswordHash(passwordEncoder.encode(employee.getPasswordHash()));
+    public Employee registerEmployee(Employee employee, String password) {
+        employee.setPasswordHash(passwordEncoder.encode(password));
         return employeeRepository.save(employee);
     }
 

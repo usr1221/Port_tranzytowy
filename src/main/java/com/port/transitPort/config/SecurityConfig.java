@@ -27,11 +27,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // Dostęp publiczny
-                        .requestMatchers("/api/**").hasAuthority("ROLE_ADMIN") // Tylko dla Administratora
-                        .requestMatchers("/api/warehouses/**").hasAuthority("ROLE_WAREHOUSE") // Tylko dla Magazyniera
-                        .requestMatchers("/api/maintenance/**").hasAuthority("ROLE_MAINTAINER") // Tylko dla Konserwatora
-                        .requestMatchers("/api/terminals/**").hasAuthority("ROLE_HANDLER") // Tylko dla Przeładunkowego
+                        .requestMatchers("/api/auth/**").permitAll() //TODO allow only admin to register users
+                        .requestMatchers("/api/ships/**").hasAuthority("ROLE_MAINTAINER")
+                        .requestMatchers("/api/warehouses/**").hasAuthority("ROLE_WAREHOUSE")
+                        .requestMatchers("/api/terminals/**").hasAuthority("ROLE_HANDLER")
+                        .requestMatchers("/api/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

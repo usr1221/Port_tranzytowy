@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 public class Employee {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pracownicy")
+    @SequenceGenerator(name = "seq_pracownicy", sequenceName = "seq_pracownicy", allocationSize = 1)
     @Column(name = "NR_PRACOWNIKA")
     private Integer id;
 
