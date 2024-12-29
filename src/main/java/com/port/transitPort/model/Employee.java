@@ -39,7 +39,7 @@ public class Employee {
     @Column(name = "E_MAIL", nullable = false, length = 40)
     private String email;
 
-    @Column(name = "HASH_HASŁA", nullable = false, length = 64)
+    @Column(name = "HASH_HASLA", nullable = false, length = 64)
     private String passwordHash;
 
     @ManyToOne

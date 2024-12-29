@@ -18,7 +18,7 @@ public class Warehouse {
     @Column(name = "NR_MAGAZYNU")
     private Integer id;
 
-    @Column(name = "POJEMNOŚĆ", nullable = false)
+    @Column(name = "POJEMNOSC", nullable = false)
     private Integer capacity;
 
     @Column(name = "ZAPELNIENIE", nullable = false)
