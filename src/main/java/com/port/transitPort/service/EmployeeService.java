@@ -7,13 +7,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     public List<Employee> getAllEmployees() {
@@ -21,7 +22,8 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found"));
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
     }
 
     public Employee createEmployee(Employee employee) {
@@ -40,10 +42,12 @@ public class EmployeeService {
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
     }
+
     public Employee registerEmployee(Employee employee) {
         employee.setPasswordHash(passwordEncoder.encode(employee.getPasswordHash()));
         return employeeRepository.save(employee);
     }
+
     public Employee authenticate(String email, String rawPassword) {
         Employee employee = employeeRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Invalid email or password"));
@@ -52,5 +56,4 @@ public class EmployeeService {
         }
         return employee;
     }
-
 }

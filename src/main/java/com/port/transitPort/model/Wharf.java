@@ -16,8 +16,6 @@ import java.util.List;
 public class Wharf {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_nabrzeza")
-    @SequenceGenerator(name = "seq_nabrzeza", sequenceName = "seq_nabrzeza", allocationSize = 1)
     @Column(name = "NR_NABRZEZA")
     private Integer id;
 

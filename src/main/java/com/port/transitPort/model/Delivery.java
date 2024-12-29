@@ -13,8 +13,6 @@ import java.util.Date;
 public class Delivery {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_dostawy")
-    @SequenceGenerator(name = "seq_dostawy", sequenceName = "seq_dostawy", allocationSize = 1)
     @Column(name = "NR_DOSTAWY")
     private Integer id;
 

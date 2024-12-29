@@ -1,10 +1,12 @@
 package com.port.transitPort.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Entity
 @Table(name = "PORTY")
@@ -14,17 +16,17 @@ import java.util.List;
 public class Port {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_porty")
-    @SequenceGenerator(name = "seq_porty", sequenceName = "seq_porty", allocationSize = 1)
     @Column(name = "NR_PORTU")
     private Integer id;
 
     @Column(name = "NAZWA", nullable = false, length = 30)
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "port", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Employee> employees = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "port", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Terminal> terminals = new ArrayList<>();
 

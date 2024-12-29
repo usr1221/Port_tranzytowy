@@ -12,8 +12,6 @@ import lombok.*;
 public class Ship {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_statki")
-    @SequenceGenerator(name = "seq_statki", sequenceName = "seq_statki", allocationSize = 1)
     @Column(name = "NR_STATKU")
     private Integer id;
 

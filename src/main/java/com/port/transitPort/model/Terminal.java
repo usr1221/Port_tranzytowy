@@ -16,8 +16,6 @@ import java.util.List;
 public class Terminal {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_terminale")
-    @SequenceGenerator(name = "seq_terminale", sequenceName = "seq_terminale", allocationSize = 1)
     @Column(name = "NR_TERMINALA")
     private Integer id;
 

@@ -13,8 +13,6 @@ import lombok.AllArgsConstructor;
 public class Warehouse {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_magazyny")
-    @SequenceGenerator(name = "seq_magazyny", sequenceName = "seq_magazyny", allocationSize = 1)
     @Column(name = "NR_MAGAZYNU")
     private Integer id;
 

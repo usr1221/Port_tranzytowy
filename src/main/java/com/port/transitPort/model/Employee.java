@@ -1,5 +1,6 @@
 package com.port.transitPort.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,6 @@ import lombok.AllArgsConstructor;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pracownicy")
-    @SequenceGenerator(name = "seq_pracownicy", sequenceName = "seq_pracownicy", allocationSize = 1)
     @Column(name = "NR_PRACOWNIKA")
     private Integer id;
 
@@ -36,12 +35,13 @@ public class Employee {
     @Column(name = "NUMER_TELEFONU", length = 14)
     private String phoneNumber;
 
-    @Column(name = "E_MAIL", nullable = false, length = 40)
+    @Column(name = "EMAIL", nullable = false, length = 40)
     private String email;
 
     @Column(name = "HASH_HASLA", nullable = false, length = 64)
     private String passwordHash;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "NR_PORTU", nullable = false)
     private Port port;
