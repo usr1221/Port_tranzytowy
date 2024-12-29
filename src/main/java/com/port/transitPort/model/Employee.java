@@ -51,4 +51,19 @@ public class Employee {
             port.getEmployees().add(this);
         }
     }
+    public String getRole() {
+        switch (this.position) {
+            case "Administrator":
+                return "ROLE_ADMIN";
+            case "Konserwator":
+                return "ROLE_MAINTAINER";
+            case "Magazynier":
+                return "ROLE_WAREHOUSE";
+            case "Przeladunkowy":
+                return "ROLE_HANDLER";
+            default:
+                return "ROLE_USER";
+        }
+    }
+
 }

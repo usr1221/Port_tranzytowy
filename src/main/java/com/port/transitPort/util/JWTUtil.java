@@ -16,9 +16,9 @@ public class JWTUtil {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    public String generateToken(String email, String position) {
+    public String generateToken(String email, String role) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("position", position); // Dodanie stanowiska do tokenu
+        claims.put("role", role);
 
         return Jwts.builder()
                 .setClaims(claims)
