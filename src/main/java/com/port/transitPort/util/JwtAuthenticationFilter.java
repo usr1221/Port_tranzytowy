@@ -30,7 +30,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = authorizationHeader.substring(7);
             String email = jwtUtil.extractEmail(token); // Użycie metody instancji
             String role = jwtUtil.extractPosition(token); // Użycie metody instancji
-
+            System.out.println(email);
+            System.out.println(role);
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 User userDetails = (User) User.builder()
                         .username(email)

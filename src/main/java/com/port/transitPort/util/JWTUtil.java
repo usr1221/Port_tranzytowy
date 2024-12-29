@@ -34,7 +34,7 @@ public class JWTUtil {
     }
 
     public String extractPosition(String token) {
-        return (String) getClaims(token).get("position");
+        return (String) getClaims(token).get("role");
     }
 
     private Claims getClaims(String token) {
