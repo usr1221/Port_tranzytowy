@@ -27,7 +27,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() //TODO allow only admin to register users
+                        .requestMatchers("/api/auth/login").permitAll() //TODO allow only admin to register users
                         .requestMatchers("/api/ships/**").hasAuthority("ROLE_MAINTAINER")
                         .requestMatchers("/api/warehouses/**").hasAuthority("ROLE_WAREHOUSE")
                         .requestMatchers("/api/terminals/**").hasAuthority("ROLE_HANDLER")
