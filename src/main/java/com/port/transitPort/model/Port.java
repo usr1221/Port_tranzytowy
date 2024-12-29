@@ -7,30 +7,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "PORT")
+@Table(name = "PORTY")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Port {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_PORTU")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_porty")
+    @SequenceGenerator(name = "seq_porty", sequenceName = "seq_porty", allocationSize = 1)
+    @Column(name = "NR_PORTU")
+    private Integer id;
 
     @Column(name = "NAZWA", nullable = false, length = 30)
     private String name;
 
-    @Column(name = "ADRES", nullable = false, length = 50)
-    private String address;
-
     @OneToMany(mappedBy = "port", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    private List<Terminal> terminals = new ArrayList<>();
-
-    @OneToMany(mappedBy = "port", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
     private List<Employee> employees = new ArrayList<>();
+
+    @OneToMany(mappedBy = "port", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Terminal> terminals = new ArrayList<>();
 
     public void addTerminal(Terminal terminal) {
         terminals.add(terminal);

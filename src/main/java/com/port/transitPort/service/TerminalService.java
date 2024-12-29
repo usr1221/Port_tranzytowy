@@ -33,7 +33,7 @@ public class TerminalService {
     public Terminal updateTerminal(Long id, Terminal updatedTerminal) {
         Terminal terminal = getTerminalById(id); // Fetch existing terminal
         terminal.setName(updatedTerminal.getName());
-        terminal.setNumberOfWharves(updatedTerminal.getNumberOfWharves());
+        terminal.setWharvesCount(updatedTerminal.getWharvesCount());
         terminal.setPort(updatedTerminal.getPort());
         return terminalRepository.save(terminal);
     }

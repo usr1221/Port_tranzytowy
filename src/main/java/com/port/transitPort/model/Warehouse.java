@@ -6,25 +6,26 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 @Entity
-@Table(name = "MAGAZYN")
+@Table(name = "MAGAZYNY")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Warehouse {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_MAGAZYNU")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_magazyny")
+    @SequenceGenerator(name = "seq_magazyny", sequenceName = "seq_magazyny", allocationSize = 1)
+    @Column(name = "NR_MAGAZYNU")
+    private Integer id;
 
     @Column(name = "POJEMNOŚĆ", nullable = false)
     private Integer capacity;
 
-    @Column(name = "ZAPEŁNIENIE", nullable = false)
+    @Column(name = "ZAPELNIENIE", nullable = false)
     private Integer occupancy;
 
     @ManyToOne
-    @JoinColumn(name = "ID_TERMINALU", nullable = false)
+    @JoinColumn(name = "NR_TERMINALA", nullable = false)
     private Terminal terminal;
 
     public void assignTerminal(Terminal terminal) {

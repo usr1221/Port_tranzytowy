@@ -9,25 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "TERMINAL")
+@Table(name = "TERMINALE")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Terminal {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_TERMINALU")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_terminale")
+    @SequenceGenerator(name = "seq_terminale", sequenceName = "seq_terminale", allocationSize = 1)
+    @Column(name = "NR_TERMINALA")
+    private Integer id;
 
-    @Column(name = "NAZWA_TERMINALU", nullable = false, length = 20)
+    @Column(name = "NAZWA", nullable = false, length = 20)
     private String name;
 
-    @Column(name = "LICZBA_NABRZEŻY", nullable = false)
-    private Integer numberOfWharves;
+    @Column(name = "ILOSC_NABRZEZY", nullable = false)
+    private Integer wharvesCount;
 
     @ManyToOne
-    @JoinColumn(name = "ID_PORTU", nullable = false)
+    @JoinColumn(name = "NR_PORTU", nullable = false)
     private Port port;
 
     @OneToMany(mappedBy = "terminal", cascade = CascadeType.ALL, orphanRemoval = true)

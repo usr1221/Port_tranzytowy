@@ -33,7 +33,6 @@ public class PortService {
     public Port updatePort(Long id, Port updatedPort) {
         Port port = getPortById(id); // Fetch existing port
         port.setName(updatedPort.getName());
-        port.setAddress(updatedPort.getAddress());
         return portRepository.save(port);
     }
 

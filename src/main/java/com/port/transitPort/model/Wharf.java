@@ -9,16 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "NABRZEZE")
+@Table(name = "NABRZEZA")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Wharf {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_NABRZEZA")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_nabrzeza")
+    @SequenceGenerator(name = "seq_nabrzeza", sequenceName = "seq_nabrzeza", allocationSize = 1)
+    @Column(name = "NR_NABRZEZA")
+    private Integer id;
 
     @Column(name = "DLUGOSC", nullable = false)
     private Integer length;
@@ -27,26 +28,44 @@ public class Wharf {
     private Integer depth;
 
     @ManyToOne
-    @JoinColumn(name = "ID_TERMINALU", nullable = false)
+    @JoinColumn(name = "NR_TERMINALA", nullable = false)
     private Terminal terminal;
 
     @OneToMany(mappedBy = "wharf", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ShipDelivery> shipDeliveries = new ArrayList<>();
+    private List<Ship> ships = new ArrayList<>();
 
-    public void addShipDelivery(ShipDelivery shipDelivery) {
-        shipDeliveries.add(shipDelivery);
-        shipDelivery.setWharf(this);
+    // Dodaje statek do listy powiązanej z nabrzeżem
+    public void addShip(Ship ship) {
+        if (!ships.contains(ship)) {
+            ships.add(ship);
+            ship.setWharf(this); // Ustawia relację w obie strony
+        }
     }
 
-    public void removeShipDelivery(ShipDelivery shipDelivery) {
-        shipDeliveries.remove(shipDelivery);
-        shipDelivery.setWharf(null);
+    // Usuwa statek z listy powiązanej z nabrzeżem
+    public void removeShip(Ship ship) {
+        if (ships.contains(ship)) {
+            ships.remove(ship);
+            ship.setWharf(null); // Zrywa relację w obie strony
+        }
     }
 
-    public void assignTerminal(Terminal terminal) {
+    // Przypisuje nabrzeże do terminala
+    public void assignToTerminal(Terminal terminal) {
+        if (this.terminal != null) {
+            unassignFromTerminal(); // Zrywa istniejącą relację z innym terminalem
+        }
         this.terminal = terminal;
         if (terminal != null && !terminal.getWharves().contains(this)) {
             terminal.getWharves().add(this);
+        }
+    }
+
+    // Usuwa nabrzeże z terminala
+    public void unassignFromTerminal() {
+        if (this.terminal != null) {
+            this.terminal.getWharves().remove(this);
+            this.terminal = null;
         }
     }
 }

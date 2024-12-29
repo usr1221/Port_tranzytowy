@@ -6,16 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 @Entity
-@Table(name = "PRACOWNIK")
+@Table(name = "PRACOWNICY")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_PRACOWNIKA")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pracownicy")
+    @SequenceGenerator(name = "seq_pracownicy", sequenceName = "seq_pracownicy", allocationSize = 1)
+    @Column(name = "NR_PRACOWNIKA")
+    private Integer id;
 
     @Column(name = "STANOWISKO", nullable = false, length = 14)
     private String position;
@@ -35,22 +36,16 @@ public class Employee {
     @Column(name = "NUMER_TELEFONU", length = 14)
     private String phoneNumber;
 
-    @Column(name = "EMAIL", nullable = false, length = 40)
+    @Column(name = "E_MAIL", nullable = false, length = 40)
     private String email;
 
     @Column(name = "HASH_HASŁA", nullable = false, length = 64)
     private String passwordHash;
 
     @ManyToOne
-    @JoinColumn(name = "ID_PORTU", nullable = false)
+    @JoinColumn(name = "NR_PORTU", nullable = false)
     private Port port;
 
-    public void assignPort(Port port) {
-        this.port = port;
-        if (port != null && !port.getEmployees().contains(this)) {
-            port.getEmployees().add(this);
-        }
-    }
     public String getRole() {
         switch (this.position) {
             case "Administrator":
