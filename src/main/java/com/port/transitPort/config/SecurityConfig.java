@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class SecurityConfig {
@@ -26,8 +28,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http.csrf().disable()
+                .cors().and()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/login").permitAll() //TODO allow only admin to register users
+                        .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/ships/**").hasAuthority("ROLE_MAINTAINER")
                         .requestMatchers("/api/warehouses/**").hasAuthority("ROLE_WAREHOUSE")
                         .requestMatchers("/api/terminals/**").hasAuthority("ROLE_HANDLER")
@@ -38,5 +41,17 @@ public class SecurityConfig {
 
         return http.build();
     }
-
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000") // Replace with your frontend's origin
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true); // Allow credentials
+            }
+        };
+    }
 }
