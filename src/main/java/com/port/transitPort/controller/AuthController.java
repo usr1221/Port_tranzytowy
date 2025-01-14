@@ -8,6 +8,7 @@ import com.port.transitPort.util.JWTUtil;
 import com.port.transitPort.util.RegisterRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -25,6 +26,12 @@ public class AuthController {
 
     @Autowired
     private JWTUtil jwtUtil;
+
+    @GetMapping("/role")
+    public ResponseEntity<String> getRoleFromToken(@RequestHeader("Authorization") String token) {
+        String role = jwtUtil.extractPosition(token.substring(7)); // Usunięcie "Bearer "
+        return ResponseEntity.ok(role);
+    }
 
     @PostMapping("/register")
     public String register(@Valid @RequestBody RegisterRequest registerRequest) {

@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/ships/**").hasAuthority("ROLE_MAINTAINER")
                         .requestMatchers("/api/warehouses/**").hasAuthority("ROLE_WAREHOUSE")
                         .requestMatchers("/api/terminals/**").hasAuthority("ROLE_HANDLER")
-                        .requestMatchers("/api/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
