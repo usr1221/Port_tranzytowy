@@ -43,7 +43,6 @@ public class Employee {
     @Column(name = "HASH_HASLA", nullable = false, length = 64)
     private String passwordHash;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "NR_PORTU", nullable = false)
     private Port port;

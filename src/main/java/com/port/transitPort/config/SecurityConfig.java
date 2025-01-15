@@ -31,9 +31,10 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/api/ships/**").hasAuthority("ROLE_MAINTAINER")
-                        .requestMatchers("/api/warehouses/**").hasAuthority("ROLE_WAREHOUSE")
-                        .requestMatchers("/api/terminals/**").hasAuthority("ROLE_HANDLER")
+                        .requestMatchers("/api/ships/**").hasAnyAuthority("ROLE_MAINTAINER", "ROLE_ADMIN")
+                        .requestMatchers("/api/warehouses/**").hasAnyAuthority("ROLE_WAREHOUSE","ROLE_ADMIN")
+                        .requestMatchers("/api/terminals/**").hasAnyAuthority("ROLE_HANDLER", "ROLE_ADMIN")
+                        .requestMatchers("/api/employees/**").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -47,7 +48,7 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000") // Replace with your frontend's origin
+                        .allowedOrigins("http://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true); // Allow credentials
