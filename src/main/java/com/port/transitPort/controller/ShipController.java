@@ -2,6 +2,8 @@ package com.port.transitPort.controller;
 
 import com.port.transitPort.model.Ship;
 import com.port.transitPort.service.ShipService;
+import com.port.transitPort.service.WharfService;
+import com.port.transitPort.util.requests.ShipRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/ships")
 public class ShipController {
+
+    @Autowired
+    private WharfService wharfService;
 
     @Autowired
     private ShipService shipService;
@@ -28,7 +33,17 @@ public class ShipController {
 
     // Create a new ship
     @PostMapping
-    public Ship createShip(@RequestBody Ship ship) {
+    public Ship createShip(@RequestBody ShipRequest shipRequest) {
+        Ship ship = Ship.builder().name(shipRequest.getName())
+                .homePort(shipRequest.getHomePort())
+                .draft(shipRequest.getDraft())
+                .length(shipRequest.getLength())
+                .callSign(shipRequest.getCallSign())
+                .type(shipRequest.getType())
+                .build();
+        if (shipRequest.getWharf() != null){
+            ship.setWharf(wharfService.getWharfById(shipRequest.getWharf()));
+        }
         return shipService.createShip(ship);
     }
 

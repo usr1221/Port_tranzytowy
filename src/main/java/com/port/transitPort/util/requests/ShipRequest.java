@@ -1,4 +1,4 @@
-package com.port.transitPort.util;
+package com.port.transitPort.util.requests;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +24,6 @@ public class ShipRequest {
     @NotBlank(message = "Type is required")
     private String type;
 
-    private Integer wharf; // Optional wharf ID
+    private Long wharf; // Optional wharf ID
 }
 

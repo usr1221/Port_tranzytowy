@@ -9,9 +9,12 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Ship {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ship_seq_gen")
+    @SequenceGenerator(name = "ship_seq_gen", sequenceName = "SEQ_STATKI", allocationSize = 1)
     @Column(name = "NR_STATKU")
     private Integer id;
 

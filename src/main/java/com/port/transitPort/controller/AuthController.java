@@ -5,7 +5,7 @@ import com.port.transitPort.model.Port;
 import com.port.transitPort.service.EmployeeService;
 import com.port.transitPort.service.PortService;
 import com.port.transitPort.util.JWTUtil;
-import com.port.transitPort.util.RegisterRequest;
+import com.port.transitPort.util.requests.RegisterRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,19 +35,20 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(@Valid @RequestBody RegisterRequest registerRequest) {
-        Employee employee = new Employee();
-        employee.setEmail(registerRequest.getEmail());
-        employee.setFirstName(registerRequest.getFirstName());
-        employee.setLastName(registerRequest.getLastName());
-        employee.setPesel(registerRequest.getPesel());
-        employee.setNationality(registerRequest.getNationality());
-        employee.setPhoneNumber(registerRequest.getPhoneNumber());
-        employee.setPosition(registerRequest.getPosition());
         Port port = portService.getPortById(registerRequest.getPort());
         if (port == null) {
             throw new RuntimeException("Port not found with ID: " + registerRequest.getPort());
         }
-        employee.setPort(port);
+        Employee employee = Employee.builder()
+                .email(registerRequest.getEmail())
+                .firstName(registerRequest.getFirstName())
+                .lastName(registerRequest.getLastName())
+                .pesel(registerRequest.getPesel())
+                .nationality(registerRequest.getNationality())
+                .phoneNumber(registerRequest.getPhoneNumber())
+                .position(registerRequest.getPosition())
+                .port(port)
+                .build();
 
         employeeService.registerEmployee(employee, registerRequest.getPassword());
         return "Employee registered successfully";

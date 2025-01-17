@@ -1,4 +1,4 @@
-package com.port.transitPort.util;
+package com.port.transitPort.util.requests;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -2,6 +2,7 @@ package com.port.transitPort.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Employee {
 
     @Id
@@ -55,7 +57,7 @@ public class Employee {
                 return "ROLE_MAINTAINER";
             case "Magazynier":
                 return "ROLE_WAREHOUSE";
-            case "Przeladunkowy":
+            case "Przeładunkowy":
                 return "ROLE_HANDLER";
             default:
                 return "ROLE_USER";

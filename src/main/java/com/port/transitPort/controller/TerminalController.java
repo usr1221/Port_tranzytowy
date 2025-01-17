@@ -1,7 +1,11 @@
 package com.port.transitPort.controller;
 
 import com.port.transitPort.model.Terminal;
+import com.port.transitPort.service.PortService;
 import com.port.transitPort.service.TerminalService;
+import com.port.transitPort.service.WarehouseService;
+import com.port.transitPort.service.WharfService;
+import com.port.transitPort.util.requests.TerminalRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +17,12 @@ public class TerminalController {
 
     @Autowired
     private TerminalService terminalService;
+    @Autowired
+    private PortService portService;
+    @Autowired
+    private WharfService wharfService;
+    @Autowired
+    private WarehouseService warehouseService;
 
     // Get all terminals
     @GetMapping
@@ -28,7 +38,18 @@ public class TerminalController {
 
     // Create a new terminal
     @PostMapping
-    public Terminal createTerminal(@RequestBody Terminal terminal) {
+    public Terminal createTerminal(@RequestBody TerminalRequest terminalRequest) {
+        Terminal terminal = Terminal.builder()
+                .name(terminalRequest.getName())
+                .wharvesCount(terminalRequest.getWharvesCount())
+                .port(portService.getPortById(terminalRequest.getPortId()))
+                .build();
+        for (Long wharfId : terminalRequest.getWharfIds()){
+            terminal.addWharf(wharfService.getWharfById(wharfId));
+        }
+        for (Long warehouseId : terminalRequest.getWarehouseIds()){
+            terminal.addWarehouse(warehouseService.getWarehouseById(warehouseId));
+        }
         return terminalService.createTerminal(terminal);
     }
 

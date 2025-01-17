@@ -10,9 +10,12 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Delivery {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "delivery_seq_gen")
+    @SequenceGenerator(name = "delivery_seq_gen", sequenceName = "SEQ_DOSTAWY", allocationSize = 1)
     @Column(name = "NR_DOSTAWY")
     private Integer id;
 

@@ -1,7 +1,9 @@
 package com.port.transitPort.controller;
 
 import com.port.transitPort.model.Warehouse;
+import com.port.transitPort.service.TerminalService;
 import com.port.transitPort.service.WarehouseService;
+import com.port.transitPort.util.requests.WarehouseRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,9 @@ public class WarehouseController {
 
     @Autowired
     private WarehouseService warehouseService;
+
+    @Autowired
+    private TerminalService terminalService;
 
     // Get all warehouses
     @GetMapping
@@ -28,7 +33,12 @@ public class WarehouseController {
 
     // Create a new warehouse
     @PostMapping
-    public Warehouse createWarehouse(@RequestBody Warehouse warehouse) {
+    public Warehouse createWarehouse(@RequestBody WarehouseRequest warehouseRequest) {
+        Warehouse warehouse = Warehouse.builder()
+                .capacity(warehouseRequest.getCapacity())
+                .occupancy(warehouseRequest.getOccupancy())
+                .terminal(terminalService.getTerminalById(warehouseRequest.getTerminalId()))
+                .build();
         return warehouseService.createWarehouse(warehouse);
     }
 
