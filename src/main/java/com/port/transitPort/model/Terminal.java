@@ -1,5 +1,6 @@
 package com.port.transitPort.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -34,9 +35,11 @@ public class Terminal {
     private Port port;
 
     @OneToMany(mappedBy = "terminal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Wharf> wharves = new ArrayList<>();
 
     @OneToMany(mappedBy = "terminal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Warehouse> warehouses = new ArrayList<>();
 
     public void addWharf(Wharf wharf) {
