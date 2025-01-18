@@ -18,6 +18,8 @@ import java.util.List;
 public class Terminal {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "terminal_seq_gen")
+    @SequenceGenerator(name = "terminal_seq_gen", sequenceName = "SEQ_TERMINALE", allocationSize = 1)
     @Column(name = "NR_TERMINALA")
     private Long id;
 

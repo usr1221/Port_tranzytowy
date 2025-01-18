@@ -44,11 +44,13 @@ public class TerminalController {
                 .wharvesCount(terminalRequest.getWharvesCount())
                 .port(portService.getPortById(terminalRequest.getPortId()))
                 .build();
-        for (Long wharfId : terminalRequest.getWharfIds()){
-            terminal.addWharf(wharfService.getWharfById(wharfId));
-        }
-        for (Long warehouseId : terminalRequest.getWarehouseIds()){
-            terminal.addWarehouse(warehouseService.getWarehouseById(warehouseId));
+        if (terminalRequest.getWarehouseIds() != null) {
+            for (Long wharfId : terminalRequest.getWharfIds()) {
+                terminal.addWharf(wharfService.getWharfById(wharfId));
+            }
+            for (Long warehouseId : terminalRequest.getWarehouseIds()) {
+                terminal.addWarehouse(warehouseService.getWarehouseById(warehouseId));
+            }
         }
         return terminalService.createTerminal(terminal);
     }
@@ -61,11 +63,13 @@ public class TerminalController {
                 .wharvesCount(terminalRequest.getWharvesCount())
                 .port(portService.getPortById(terminalRequest.getPortId()))
                 .build();
-        for (Long wharfId : terminalRequest.getWharfIds()){
-            terminal.addWharf(wharfService.getWharfById(wharfId));
-        }
-        for (Long warehouseId : terminalRequest.getWarehouseIds()){
-            terminal.addWarehouse(warehouseService.getWarehouseById(warehouseId));
+        if (terminalRequest.getWarehouseIds() != null) {
+            for (Long wharfId : terminalRequest.getWharfIds()) {
+                terminal.addWharf(wharfService.getWharfById(wharfId));
+            }
+            for (Long warehouseId : terminalRequest.getWarehouseIds()) {
+                terminal.addWarehouse(warehouseService.getWarehouseById(warehouseId));
+            }
         }
         return terminalService.updateTerminal(id, terminal);
     }
