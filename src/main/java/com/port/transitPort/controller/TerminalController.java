@@ -65,6 +65,8 @@ public class TerminalController {
                 .build();
         if (terminalRequest.getWharfIds() != null){
             for (Long wharfId : terminalRequest.getWharfIds()){
+                System.out.println("WHARF ID" + wharfId);
+                System.out.println(wharfService.getWharfById(wharfId));
                 terminal.addWharf(wharfService.getWharfById(wharfId));
             }
             for (Long warehouseId : terminalRequest.getWarehouseIds()){
