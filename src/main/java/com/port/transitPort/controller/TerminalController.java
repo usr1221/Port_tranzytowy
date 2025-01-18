@@ -44,14 +44,16 @@ public class TerminalController {
                 .wharvesCount(terminalRequest.getWharvesCount())
                 .port(portService.getPortById(terminalRequest.getPortId()))
                 .build();
-        for (Long wharfId : terminalRequest.getWharfIds()){
-            terminal.addWharf(wharfService.getWharfById(wharfId));
+        if (terminalRequest.getWharfIds() != null) {
+            for (Long wharfId : terminalRequest.getWharfIds()) {
+                terminal.addWharf(wharfService.getWharfById(wharfId));
+            }
+            for (Long warehouseId : terminalRequest.getWarehouseIds()) {
+                terminal.addWarehouse(warehouseService.getWarehouseById(warehouseId));
+            }
         }
-        for (Long warehouseId : terminalRequest.getWarehouseIds()){
-            terminal.addWarehouse(warehouseService.getWarehouseById(warehouseId));
+            return terminalService.createTerminal(terminal);
         }
-        return terminalService.createTerminal(terminal);
-    }
 
     // Update an existing terminal
     @PutMapping("/{id}")
@@ -61,11 +63,13 @@ public class TerminalController {
                 .wharvesCount(terminalRequest.getWharvesCount())
                 .port(portService.getPortById(terminalRequest.getPortId()))
                 .build();
-        for (Long wharfId : terminalRequest.getWharfIds()){
-            terminal.addWharf(wharfService.getWharfById(wharfId));
-        }
-        for (Long warehouseId : terminalRequest.getWarehouseIds()){
-            terminal.addWarehouse(warehouseService.getWarehouseById(warehouseId));
+        if (terminalRequest.getWharfIds() != null){
+            for (Long wharfId : terminalRequest.getWharfIds()){
+                terminal.addWharf(wharfService.getWharfById(wharfId));
+            }
+            for (Long warehouseId : terminalRequest.getWarehouseIds()){
+                terminal.addWarehouse(warehouseService.getWarehouseById(warehouseId));
+            }
         }
         return terminalService.updateTerminal(id, terminal);
     }

@@ -1,5 +1,6 @@
 package com.port.transitPort.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,8 @@ import java.util.List;
 public class Terminal {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "terminal_seq_gen")
+    @SequenceGenerator(name = "terminal_seq_gen", sequenceName = "SEQ_TERMINALE", allocationSize = 1)
     @Column(name = "NR_TERMINALA")
     private Long id;
 
@@ -32,9 +35,11 @@ public class Terminal {
     private Port port;
 
     @OneToMany(mappedBy = "terminal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Wharf> wharves = new ArrayList<>();
 
     @OneToMany(mappedBy = "terminal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Warehouse> warehouses = new ArrayList<>();
 
     public void addWharf(Wharf wharf) {
