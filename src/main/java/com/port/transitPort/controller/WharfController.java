@@ -1,7 +1,9 @@
 package com.port.transitPort.controller;
 
 import com.port.transitPort.model.Wharf;
+import com.port.transitPort.service.TerminalService;
 import com.port.transitPort.service.WharfService;
+import com.port.transitPort.util.requests.WharfRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,9 @@ public class WharfController {
 
     @Autowired
     private WharfService wharfService;
+
+    @Autowired
+    private TerminalService terminalService;
 
     // Get all wharves
     @GetMapping
@@ -28,7 +33,12 @@ public class WharfController {
 
     // Create a new wharf
     @PostMapping
-    public Wharf createWharf(@RequestBody Wharf wharf) {
+    public Wharf createWharf(@RequestBody WharfRequest wharfRequest) {
+        Wharf wharf = Wharf.builder()
+                .depth(wharfRequest.getDepth())
+                .length(wharfRequest.getDepth())
+                .terminal(terminalService.getTerminalById(wharfRequest.getTerminalId()))
+                .build();
         return wharfService.createWharf(wharf);
     }
 

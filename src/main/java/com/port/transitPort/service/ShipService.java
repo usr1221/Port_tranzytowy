@@ -2,6 +2,7 @@ package com.port.transitPort.service;
 
 import com.port.transitPort.model.Port;
 import com.port.transitPort.model.Ship;
+import com.port.transitPort.model.Wharf;
 import com.port.transitPort.repository.ShipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ public class ShipService {
 
     @Autowired
     private ShipRepository shipRepository;
+    @Autowired
+    private WharfService wharfService;
 
     public List<Ship> getAllShips() {
         return shipRepository.findAll();
@@ -34,6 +37,12 @@ public class ShipService {
         ship.setLength(updatedShip.getLength());
         ship.setCallSign(updatedShip.getCallSign());
         ship.setType(updatedShip.getType());
+        if (updatedShip.getWharf() != null) {
+            Wharf wharf = wharfService.getWharfById(updatedShip.getWharf().getId());
+            ship.setWharf(wharf);
+        } else {
+            ship.setWharf(null); // Brak przypisania do nabrzeża
+        }
         return shipRepository.save(ship);
     }
 

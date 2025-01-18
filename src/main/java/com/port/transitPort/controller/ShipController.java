@@ -49,8 +49,15 @@ public class ShipController {
 
     // Update an existing ship
     @PutMapping("/{id}")
-    public Ship updateShip(@PathVariable Long id, @RequestBody Ship updatedShip) {
-        return shipService.updateShip(id, updatedShip);
+    public Ship updateShip(@PathVariable Long id, @RequestBody ShipRequest shipRequest) {
+        Ship ship = Ship.builder().name(shipRequest.getName())
+                .homePort(shipRequest.getHomePort())
+                .draft(shipRequest.getDraft())
+                .length(shipRequest.getLength())
+                .callSign(shipRequest.getCallSign())
+                .type(shipRequest.getType())
+                .build();
+        return shipService.updateShip(id, ship);
     }
 
     // Delete a ship by ID

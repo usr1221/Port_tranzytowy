@@ -19,7 +19,7 @@ public class Wharf {
 
     @Id
     @Column(name = "NR_NABRZEZA")
-    private Integer id;
+    private Long id;
 
     @Column(name = "DLUGOSC", nullable = false)
     private Integer length;

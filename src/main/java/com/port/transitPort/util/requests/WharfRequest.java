@@ -18,5 +18,5 @@ public class WharfRequest {
     private Integer depth;
 
     @NotNull(message = "Terminal ID is required")
-    private Integer terminalId;
+    private Long terminalId;
 }
