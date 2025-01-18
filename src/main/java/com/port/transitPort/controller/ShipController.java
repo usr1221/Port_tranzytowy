@@ -57,6 +57,9 @@ public class ShipController {
                 .callSign(shipRequest.getCallSign())
                 .type(shipRequest.getType())
                 .build();
+        if (shipRequest.getWharf() != null){
+            ship.setWharf(wharfService.getWharfById(shipRequest.getWharf()));
+        }
         return shipService.updateShip(id, ship);
     }
 

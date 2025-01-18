@@ -44,8 +44,13 @@ public class WharfController {
 
     // Update an existing wharf
     @PutMapping("/{id}")
-    public Wharf updateWharf(@PathVariable Long id, @RequestBody Wharf updatedWharf) {
-        return wharfService.updateWharf(id, updatedWharf);
+    public Wharf updateWharf(@PathVariable Long id, @RequestBody WharfRequest wharfRequest) {
+        Wharf wharf = Wharf.builder()
+                .depth(wharfRequest.getDepth())
+                .length(wharfRequest.getDepth())
+                .terminal(terminalService.getTerminalById(wharfRequest.getTerminalId()))
+                .build();
+        return wharfService.updateWharf(id, wharf);
     }
 
     // Delete a wharf by ID

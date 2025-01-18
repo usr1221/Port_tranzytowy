@@ -19,7 +19,7 @@ public class Terminal {
 
     @Id
     @Column(name = "NR_TERMINALA")
-    private Integer id;
+    private Long id;
 
     @Column(name = "NAZWA", nullable = false, length = 20)
     private String name;

@@ -1,5 +1,6 @@
 package com.port.transitPort.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,8 @@ import java.util.List;
 public class Wharf {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wharves_seq_gen")
+    @SequenceGenerator(name = "wharves_seq_gen", sequenceName = "SEQ_NABRZEZA", allocationSize = 1)
     @Column(name = "NR_NABRZEZA")
     private Long id;
 
@@ -28,10 +31,12 @@ public class Wharf {
     private Integer depth;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "NR_TERMINALA", nullable = false)
     private Terminal terminal;
 
     @OneToMany(mappedBy = "wharf", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Ship> ships = new ArrayList<>();
 
     // Dodaje statek do listy powiązanej z nabrzeżem

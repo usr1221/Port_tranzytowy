@@ -41,8 +41,8 @@ public class ShipService {
             Wharf wharf = wharfService.getWharfById(updatedShip.getWharf().getId());
             ship.setWharf(wharf);
         } else {
-            ship.setWharf(null); // Brak przypisania do nabrzeża
-        }
+            ship.setWharf(null);
+        };
         return shipRepository.save(ship);
     }
 

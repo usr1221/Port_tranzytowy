@@ -55,8 +55,19 @@ public class TerminalController {
 
     // Update an existing terminal
     @PutMapping("/{id}")
-    public Terminal updateTerminal(@PathVariable Long id, @RequestBody Terminal updatedTerminal) {
-        return terminalService.updateTerminal(id, updatedTerminal);
+    public Terminal updateTerminal(@PathVariable Long id, @RequestBody TerminalRequest terminalRequest) {
+        Terminal terminal = Terminal.builder()
+                .name(terminalRequest.getName())
+                .wharvesCount(terminalRequest.getWharvesCount())
+                .port(portService.getPortById(terminalRequest.getPortId()))
+                .build();
+        for (Long wharfId : terminalRequest.getWharfIds()){
+            terminal.addWharf(wharfService.getWharfById(wharfId));
+        }
+        for (Long warehouseId : terminalRequest.getWarehouseIds()){
+            terminal.addWarehouse(warehouseService.getWarehouseById(warehouseId));
+        }
+        return terminalService.updateTerminal(id, terminal);
     }
 
     // Delete a terminal by ID

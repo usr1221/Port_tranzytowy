@@ -44,8 +44,13 @@ public class WarehouseController {
 
     // Update an existing warehouse
     @PutMapping("/{id}")
-    public Warehouse updateWarehouse(@PathVariable Long id, @RequestBody Warehouse updatedWarehouse) {
-        return warehouseService.updateWarehouse(id, updatedWarehouse);
+    public Warehouse updateWarehouse(@PathVariable Long id, @RequestBody WarehouseRequest warehouseRequest) {
+        Warehouse warehouse = Warehouse.builder()
+                .capacity(warehouseRequest.getCapacity())
+                .occupancy(warehouseRequest.getOccupancy())
+                .terminal(terminalService.getTerminalById(warehouseRequest.getTerminalId()))
+                .build();
+        return warehouseService.updateWarehouse(id, warehouse);
     }
 
     // Delete a warehouse by ID

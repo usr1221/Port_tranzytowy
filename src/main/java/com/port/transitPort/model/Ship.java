@@ -16,7 +16,7 @@ public class Ship {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ship_seq_gen")
     @SequenceGenerator(name = "ship_seq_gen", sequenceName = "SEQ_STATKI", allocationSize = 1)
     @Column(name = "NR_STATKU")
-    private Integer id;
+    private Long id;
 
     @Column(name = "NAZWA_STATKU", nullable = false, length = 30)
     private String name;

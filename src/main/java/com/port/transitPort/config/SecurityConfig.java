@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/ships/**").hasAnyAuthority("ROLE_MAINTAINER", "ROLE_ADMIN")
                         .requestMatchers("/api/warehouses/**").hasAnyAuthority("ROLE_WAREHOUSE","ROLE_ADMIN")
+                        .requestMatchers("/api/wharves/**").hasAnyAuthority("ROLE_WAREHOUSE","ROLE_ADMIN")
                         .requestMatchers("/api/deliveries/**").hasAnyAuthority("ROLE_WAREHOUSE", "ROLE_ADMIN")
                         .requestMatchers("/api/terminals/**").hasAnyAuthority("ROLE_HANDLER", "ROLE_ADMIN")
                         .requestMatchers("/api/employees/**").hasAnyAuthority("ROLE_ADMIN")

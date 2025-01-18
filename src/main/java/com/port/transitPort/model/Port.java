@@ -18,7 +18,7 @@ public class Port {
 
     @Id
     @Column(name = "NR_PORTU")
-    private Integer id;
+    private Long id;
 
     @Column(name = "NAZWA", nullable = false, length = 30)
     private String name;

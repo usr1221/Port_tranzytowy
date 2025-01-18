@@ -19,7 +19,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pracownicy")
     @SequenceGenerator(name = "seq_pracownicy", sequenceName = "seq_pracownicy", allocationSize = 1)
     @Column(name = "NR_PRACOWNIKA")
-    private Integer id;
+    private Long id;
 
     @Column(name = "STANOWISKO", nullable = false, length = 14)
     private String position;

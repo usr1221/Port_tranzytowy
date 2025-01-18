@@ -1,5 +1,6 @@
 package com.port.transitPort.service;
 
+import com.port.transitPort.model.Terminal;
 import com.port.transitPort.model.Wharf;
 import com.port.transitPort.repository.WharfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ public class WharfService {
 
     @Autowired
     private WharfRepository wharfRepository;
+    @Autowired
+    private TerminalService terminalService;
 
     // Retrieve all wharves
     public List<Wharf> getAllWharves() {
@@ -35,6 +38,12 @@ public class WharfService {
         wharf.setLength(updatedWharf.getLength());
         wharf.setDepth(updatedWharf.getDepth());
         wharf.setTerminal(updatedWharf.getTerminal());
+        if (updatedWharf.getTerminal() != null) {
+            Terminal terminal = terminalService.getTerminalById(updatedWharf.getTerminal().getId());
+            wharf.setTerminal(terminal);
+        } else {
+            wharf.setTerminal(null); // Brak przypisania do nabrzeża
+        }
         return wharfRepository.save(wharf);
     }
 

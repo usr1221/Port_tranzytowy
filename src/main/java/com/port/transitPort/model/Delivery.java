@@ -17,7 +17,7 @@ public class Delivery {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "delivery_seq_gen")
     @SequenceGenerator(name = "delivery_seq_gen", sequenceName = "SEQ_DOSTAWY", allocationSize = 1)
     @Column(name = "NR_DOSTAWY")
-    private Integer id;
+    private Long id;
 
     @Column(name = "STATUS", nullable = false, length = 12)
     private String status;

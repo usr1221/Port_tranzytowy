@@ -1,5 +1,6 @@
 package com.port.transitPort.service;
 
+import com.port.transitPort.model.Terminal;
 import com.port.transitPort.model.Warehouse;
 import com.port.transitPort.repository.WarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ public class WarehouseService {
 
     @Autowired
     private WarehouseRepository warehouseRepository;
+    @Autowired
+    private TerminalService terminalService;
 
     // Retrieve all warehouses
     public List<Warehouse> getAllWarehouses() {
@@ -34,7 +37,12 @@ public class WarehouseService {
         Warehouse warehouse = getWarehouseById(id); // Fetch existing warehouse
         warehouse.setCapacity(updatedWarehouse.getCapacity());
         warehouse.setOccupancy(updatedWarehouse.getOccupancy());
-        warehouse.setTerminal(updatedWarehouse.getTerminal());
+        if (updatedWarehouse.getTerminal() != null) {
+            Terminal terminal = terminalService.getTerminalById(updatedWarehouse.getTerminal().getId());
+            warehouse.setTerminal(terminal);
+        } else {
+            warehouse.setTerminal(null); // Brak przypisania do nabrzeża
+        }
         return warehouseRepository.save(warehouse);
     }
 
